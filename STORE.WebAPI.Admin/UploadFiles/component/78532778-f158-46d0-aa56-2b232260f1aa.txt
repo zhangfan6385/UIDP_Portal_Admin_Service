@@ -1,0 +1,5 @@
+https://www.cnblogs.com/quan01994/p/6003161.html
+https://www.cnblogs.com/qulianqing/p/7413640.html
+
+mysql开启远程访问权限：https://www.cnblogs.com/lm970585581/p/7522560.html
+autofac：http://docs.autofac.org/en/latest/integration/moq.html
