@@ -125,7 +125,7 @@ namespace STORE.WebAPI.Controllers
                     string suffix = name.Substring(name.LastIndexOf("."), (name.Length - name.LastIndexOf("."))); //扩展名
                     double filesize =Math.Round(Convert.ToDouble(file.Length / 1024.00 / 1024.00),2);
                     string filepath = @"\\UploadFiles\\platform\\" + Guid.NewGuid().ToString() + suffix;
-                    String filename = System.IO.Directory.GetCurrentDirectory();
+                    String filename = System.IO.Directory.GetCurrentDirectory() + filepath;
                     if (System.IO.File.Exists(filename))
                     {
                         System.IO.File.Delete(filename);
@@ -139,7 +139,7 @@ namespace STORE.WebAPI.Controllers
                     }
                     Dictionary<string, object> d = new Dictionary<string, object>();
                     d["PLAT_ID"] = platId;
-                    d["FILE_URL"] = @"\\UploadFiles\\platform\\" + Guid.NewGuid().ToString() + suffix;
+                    d["FILE_URL"] = filepath;
                     d["FILE_NAME"] = (string.IsNullOrEmpty(fileName))? name: fileName;
                     d["FILE_SIZE"] = filesize;
                     d["FILE_TYPE"] = fileType;

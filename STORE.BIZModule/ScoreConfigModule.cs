@@ -5,26 +5,24 @@ using System.Text;
 using STORE.ODS;
 using STORE.UTILITY;
 using Newtonsoft.Json;
-using System.Linq;
 
 namespace STORE.BIZModule
 {
-   public class ServiceModule
+   public class ScoreConfigModule
     {
-        ServiceDB db = new ServiceDB();
-        OrgDB orgdb = new OrgDB();
+        ScoreConfigDB db = new ScoreConfigDB();
         /// <summary>
         /// 查询
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, object> fetchServiceList(Dictionary<string, object> d)
+        public Dictionary<string, object> fetchScoreConfigList(Dictionary<string, object> d)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
             {
                 int limit = d["limit"] == null ? 100 : int.Parse(d["limit"].ToString());
                 int page = d["page"] == null ? 1 : int.Parse(d["page"].ToString());
-                DataTable dt = db.fetchServiceList(d);
+                DataTable dt = db.fetchScoreConfigList(d);
                 r["total"] = dt.Rows.Count;
                 r["items"] = KVTool.TableToListDic(KVTool.GetPagedTable(dt, page, limit));
                 r["code"] = 2000;
@@ -44,29 +42,19 @@ namespace STORE.BIZModule
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        public string createServiceArticle(Dictionary<string, object> d)
+        public string createScoreConfigArticle(Dictionary<string, object> d)
         {
-            d["SERVICE_ID"] = Guid.NewGuid().ToString();
-            if (d["MANAGE_ORG_ID"] != null && d["MANAGE_ORG_ID"].ToString() != "")
-            {
-                DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
-                d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
-            }
-            return db.createServiceArticle(d);
+            d["SCORE_CONF_ID"] = Guid.NewGuid().ToString();
+            return db.createScoreConfigArticle(d);
         }
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        public string updateServiceData(Dictionary<string, object> d)
+        public string updateScoreConfigData(Dictionary<string, object> d)
         {
-            if (d["MANAGE_ORG_ID"] != null && d["MANAGE_ORG_ID"].ToString() != "")
-            {
-                DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
-                d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
-            }
-            return db.updateServiceData(d);
+            return db.updateScoreConfigData(d);
         }
 
         /// <summary>
@@ -74,9 +62,9 @@ namespace STORE.BIZModule
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        public string updateServiceArticle(string id)
+        public string updateScoreConfigArticle(string id)
         {
-            return db.updateServiceArticle(id);
+            return db.updateScoreConfigArticle(id);
         }
 
     }
