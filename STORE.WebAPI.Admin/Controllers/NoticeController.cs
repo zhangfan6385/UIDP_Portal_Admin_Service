@@ -19,6 +19,7 @@ namespace STORE.WebAPI.Controllers
     public class NoticeController : WebApiBaseController
     {
         NoticeModule mm = new NoticeModule();
+       
         /// <summary>
         /// 查询配置信息
         /// </summary>

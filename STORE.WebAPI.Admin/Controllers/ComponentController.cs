@@ -24,7 +24,7 @@ namespace STORE.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("fetchComponentList")]
-        public IActionResult fetchComponentList(string limit, string page, string COMPONENT_CODE, string COMPONENT_NAME, string BEGIN_COMPONENT_PUBLISHDATE, string END_COMPONENT_PUBLISHDATE)
+        public IActionResult fetchComponentList(string limit, string page,string MANAGE_ORG_CODE, string COMPONENT_CODE, string COMPONENT_NAME, string BEGIN_COMPONENT_PUBLISHDATE, string END_COMPONENT_PUBLISHDATE)
         {
             //UserModule user = new UserModule();
             //string Admin = user.getAdminCode();
@@ -36,6 +36,7 @@ namespace STORE.WebAPI.Controllers
             d["page"] = page;
             d["COMPONENT_CODE"] = COMPONENT_CODE;
             d["COMPONENT_NAME"] = COMPONENT_NAME;
+            d["MANAGE_ORG_CODE"] = MANAGE_ORG_CODE;
             d["BEGIN_COMPONENT_PUBLISHDATE"] = BEGIN_COMPONENT_PUBLISHDATE;
             d["END_COMPONENT_PUBLISHDATE"] = END_COMPONENT_PUBLISHDATE;
             Dictionary<string, object> res = mm.fetchComponentList(d);

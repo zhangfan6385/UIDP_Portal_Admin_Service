@@ -94,6 +94,12 @@ namespace STORE.ODS
 
             return db.ExecutByStringResult(sql);
         }
+        public string updatePTRpass(Dictionary<string, object> d)
+        {
+            string sql = "update  ts_uidp_userinfo set USER_PASS='" + d["newpassword"].ToString() + "' where USER_ID='" + d["userid"].ToString() + "' ;";
+
+            return db.ExecutByStringResult(sql);
+        }
         public string updateAdminPasswordData(Dictionary<string, object> d)
         {
             string sql = "update  ts_uidp_config set CONF_VALUE='" + d["newpassword"].ToString() + "' where CONF_CODE='Admin_Password' ;";

@@ -26,6 +26,15 @@ namespace STORE.ODS
             return  db.GetDataTable(sql);
         }
         /// <summary>
+        /// 根据配置项获取配置信息
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public DataTable getConfigInfo(Dictionary<string, object> d) {
+            string sql = "select * from ts_uidp_config where CONF_CODE = '" + d["CONF_CODE"].ToString() + "'";
+            return db.GetDataTable(sql);
+        }
+        /// <summary>
         /// 登录获取系统配置信息
         /// </summary>
         /// <param name="d"></param>
@@ -69,7 +78,6 @@ namespace STORE.ODS
 
             return db.ExecutByStringResult(sql);
         }
-
 
         public string updateConfigData(Dictionary<string, object> d)
         {

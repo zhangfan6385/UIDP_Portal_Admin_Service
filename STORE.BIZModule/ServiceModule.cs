@@ -13,6 +13,12 @@ namespace STORE.BIZModule
     {
         ServiceDB db = new ServiceDB();
         OrgDB orgdb = new OrgDB();
+
+        public DataTable getServiceInfo(Dictionary<string, object> d)
+        {
+            return db.getServiceInfo(d);
+        }
+            
         /// <summary>
         /// 查询
         /// </summary>

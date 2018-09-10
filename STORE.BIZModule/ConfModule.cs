@@ -10,6 +10,11 @@ namespace STORE.BIZModule
     public class ConfModule
     {
         ConfDB db = new ConfDB();
+        public DataTable getSmtpConfig(Dictionary<string, object> d)
+        {
+           return db.loginConfig(d);
+        }
+
         /// <summary>
         /// 登录读取配置信息
         /// </summary>
@@ -85,6 +90,16 @@ namespace STORE.BIZModule
                 return dt.Rows[0]["CONF_VALUE"].ToString().ToLower() == "true" ? true : false;
             }
             return false;
+        }
+
+        public string getConfigInfo(Dictionary<string, object> d)
+        {
+            DataTable dt = db.getConfigInfo(d);
+            if (dt != null)
+            {
+                return dt.Rows[0]["CONF_VALUE"].ToString();
+            }
+            return "0";
         }
 
         public string createConfigArticle(Dictionary<string, object> d)

@@ -24,7 +24,7 @@ namespace STORE.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("fetchServiceList")]
-        public IActionResult fetchServiceList(string limit, string page, string SERVICE_CODE, string SERVICE_NAME, string BEGIN_SERVICE_PUBLISHDATE, string END_SERVICE_PUBLISHDATE)
+        public IActionResult fetchServiceList(string limit, string page, string SERVICE_CODE,string MANAGE_ORG_CODE, string SERVICE_NAME, string BEGIN_SERVICE_PUBLISHDATE, string END_SERVICE_PUBLISHDATE)
         {
             //UserModule user = new UserModule();
             //string Admin = user.getAdminCode();
@@ -36,6 +36,7 @@ namespace STORE.WebAPI.Controllers
             d["page"] = page;
             d["SERVICE_CODE"] = SERVICE_CODE;
             d["SERVICE_NAME"] = SERVICE_NAME;
+            d["MANAGE_ORG_CODE"] = MANAGE_ORG_CODE;
             d["BEGIN_SERVICE_PUBLISHDATE"] = BEGIN_SERVICE_PUBLISHDATE;
             d["END_SERVICE_PUBLISHDATE"] = END_SERVICE_PUBLISHDATE;
             Dictionary<string, object> res = mm.fetchServiceList(d);

@@ -93,6 +93,14 @@ namespace STORE.ODS
             string sql = " select * from ts_uidp_groupinfo ";
             return db.GetDataTable(sql);
         }
+        public DataTable GetRoleByUserId(string userId)
+        {
+            string sql = @"select a.*,b.GROUP_NAME,b.GROUP_CODE,b.GROUP_CODE_UPPER,b.SYS_CODE from ts_uidp_group_user a
+                        left join ts_uidp_groupinfo b
+                        on a.GROUP_ID=b.GROUP_ID where a.USER_ID='" + userId + "'";
+            return db.GetDataTable(sql);
+        }
+
         /// <summary>
         /// 分配角色给用户
         /// </summary>

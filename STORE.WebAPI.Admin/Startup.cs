@@ -69,6 +69,12 @@ namespace STORE.WebAPI
                 System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "UploadFiles/service")),
                 RequestPath = "/UploadFiles/service"
             });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+               System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "UploadFiles/notice/pic")),
+                RequestPath = "/UploadFiles/notice/pic"
+            });
             #region 解决Ubuntu Nginx 代理不能获取IP问题
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

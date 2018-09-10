@@ -15,13 +15,18 @@ namespace STORE.ODS
         /// <returns></returns>
         public DataTable fetchComponentList(Dictionary<string, object> d)
         {
-            string sql = "select * from ts_store_component a ";
-            sql += " where 1=1 and IS_DELETE=0 ";
+            string sql = @"select a.*,b.ORG_CODE from ts_store_component a
+INNER JOIN ts_uidp_org b on a.MANAGE_ORG_ID = b.ORG_ID ";
+            sql += " where 1=1 and a.IS_DELETE=0 ";
             if (d.Count > 0)
             {
                 if (d["COMPONENT_CODE"] != null && d["COMPONENT_CODE"].ToString() != "")
                 {
                     sql += " and a.COMPONENT_CODE like '%" + d["COMPONENT_CODE"].ToString() + "%'";
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and b.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString() + "%'";
                 }
                 if (d["COMPONENT_NAME"] != null && d["COMPONENT_NAME"].ToString() != "")
                 {

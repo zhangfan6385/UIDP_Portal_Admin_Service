@@ -66,5 +66,15 @@ namespace STORE.ODS
                 return obj.ToString();
             }
         }
+
+        public string delPostByID(Dictionary<string, object> d)
+        {
+            string sql1 = "delete from ts_community_comment where POST_ID='" + d["POST_ID"].ToString() + "'";
+            string sql2 = "delete from ts_community_post where POST_ID='" + d["POST_ID"].ToString() + "'";
+            List<string> sql = new List<string>();
+            sql.Add(sql1);
+            sql.Add(sql2);
+            return db.Executs(sql);
+        }
     }
 }

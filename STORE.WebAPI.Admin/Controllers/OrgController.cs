@@ -30,6 +30,7 @@ namespace STORE.WebAPI.Controllers
         [HttpGet("fetchPartyList")]
         public dynamic fetchPartyList(string sysCode)
         {
+            StringBuilder sb = new StringBuilder();
             Dictionary<string, object> d = new Dictionary<string, object>();
             d["sysCode"] = sysCode;
 
@@ -39,14 +40,21 @@ namespace STORE.WebAPI.Controllers
                 c = mm.fetchPartyList(d);
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 c = new List<ClsOrgInfo>();
             }
-
+            ////JObject obj=JObject.FromObject(c);
+            ////if
+            //foreach (var item in c)
+            //{
+            //    item.children.Count();
+                
+            //}
             return JsonConvert.SerializeObject(c);
-
+            
         }
+
         /// <summary>
         /// 查询组织结构
         /// </summary>

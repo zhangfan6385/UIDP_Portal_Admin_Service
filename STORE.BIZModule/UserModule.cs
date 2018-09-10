@@ -99,6 +99,10 @@ namespace STORE.BIZModule
         {
             return db.updateUserFlag(d);
         }
+        public string updatePTRpass(Dictionary<string, object> d)
+        {
+            return db.updatePTRpass(d);
+        }
         public string updatePasswordData(Dictionary<string, object> d)
         {
             if (d["roleLevel"].ToString() == "admin")

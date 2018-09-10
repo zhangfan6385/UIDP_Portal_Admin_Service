@@ -15,8 +15,9 @@ namespace STORE.ODS
         /// <returns></returns>
         public DataTable fetchPlatformList(Dictionary<string, object> d)
         {
-            string sql = "select * from ts_store_platform a ";
-            sql += " where 1=1 and IS_DELETE=0 ";
+            string sql = @"select a.*,b.ORG_CODE from ts_store_platform a 
+                        INNER JOIN ts_uidp_org b on a.MANAGE_ORG_ID = b.ORG_ID";
+            sql += " where 1=1 and a.IS_DELETE=0 ";
             if (d.Count > 0)
             {
                 if (d["PLAT_TYPE"] != null && d["PLAT_TYPE"].ToString() != "")
@@ -26,6 +27,10 @@ namespace STORE.ODS
                 if (d["PLAT_CODE"] != null && d["PLAT_CODE"].ToString() != "")
                 {
                     sql += " and a.PLAT_CODE like '%" + d["PLAT_CODE"].ToString() + "%'";
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and b.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString() + "%'";
                 }
                 if (d["PLAT_NAME"] != null && d["PLAT_NAME"].ToString() != "")
                 {

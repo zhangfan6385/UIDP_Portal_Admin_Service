@@ -8,21 +8,21 @@ using Newtonsoft.Json;
 
 namespace STORE.BIZModule
 {
-   public class CommunityPostModule
+   public class StoreLogModule
     {
-        CommunityPostDB db = new CommunityPostDB();
+        StoreLogDB db = new StoreLogDB();
         /// <summary>
         /// 查询
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, object> getCommunityPostList(Dictionary<string, object> d)
+        public Dictionary<string, object> fetchStoreLogList(Dictionary<string, object> d)
         {
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
             {
                 int limit = d["limit"] == null ? 100 : int.Parse(d["limit"].ToString());
                 int page = d["page"] == null ? 1 : int.Parse(d["page"].ToString());
-                DataTable dt = db.getCommunityPostList(d);
+                DataTable dt = db.fetchStoreLogList(d);
                 r["total"] = dt.Rows.Count;
                 r["items"] = KVTool.TableToListDic(KVTool.GetPagedTable(dt, page, limit));
                 r["code"] = 2000;
@@ -36,10 +36,18 @@ namespace STORE.BIZModule
             }
             return r;
         }
-        public string deletePost(Dictionary<string, object> d)
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public string createNoticeArticle(Dictionary<string, object> d)
         {
-            return db.delPostByID(d);
+            d["STORE_LOG_ID"] = Guid.NewGuid().ToString();
+            return db.createStoreLogArticle(d);
         }
+      
 
     }
 }

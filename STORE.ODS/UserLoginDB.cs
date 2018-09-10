@@ -239,7 +239,11 @@ where USER_ID = '{0}'
         {
             if (!string.IsNullOrEmpty(userCode))
             {
-                string sql = String.Format("select * from ts_uidp_userinfo where USER_DOMAIN='{0}' "
+                string sql = String.Format(@"select a.*,b.ORG_ID,c.ORG_CODE from ts_uidp_userinfo a
+                left join ts_uidp_org_user b
+                on a.USER_ID = b.USER_ID
+                left join ts_uidp_org c
+                on b.ORG_ID = c.ORG_ID where USER_DOMAIN='{0}' "
                    , userCode);
                 return db.GetDataTable(sql);
             }

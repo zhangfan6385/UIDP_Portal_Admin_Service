@@ -24,7 +24,7 @@ namespace STORE.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("fetchPlatformList")]
-        public IActionResult fetchPlatformList(string limit, string page,string PLAT_TYPE, string PLAT_CODE, string PLAT_NAME, string BEGIN_PLAT_PUBLISHDATE, string END_PLAT_PUBLISHDATE)
+        public IActionResult fetchPlatformList(string limit, string page,string PLAT_TYPE, string MANAGE_ORG_CODE, string PLAT_CODE, string PLAT_NAME, string BEGIN_PLAT_PUBLISHDATE, string END_PLAT_PUBLISHDATE)
         {
             //UserModule user = new UserModule();
             //string Admin = user.getAdminCode();
@@ -37,6 +37,7 @@ namespace STORE.WebAPI.Controllers
             d["PLAT_TYPE"] = PLAT_TYPE;
             d["PLAT_CODE"] = PLAT_CODE;
             d["PLAT_NAME"] = PLAT_NAME;
+            d["MANAGE_ORG_CODE"] = MANAGE_ORG_CODE;
             d["BEGIN_PLAT_PUBLISHDATE"] = BEGIN_PLAT_PUBLISHDATE;
             d["END_PLAT_PUBLISHDATE"] = END_PLAT_PUBLISHDATE;
             Dictionary<string, object> res = mm.fetchPlatformList(d);

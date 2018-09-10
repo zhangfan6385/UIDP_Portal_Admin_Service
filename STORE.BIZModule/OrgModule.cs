@@ -12,10 +12,10 @@ namespace STORE.BIZModule
     public class OrgModule
     {
         OrgDB db = new OrgDB();
-
+        
         public List<ClsOrgInfo> fetchPartyList(Dictionary<string, object> sysCode)
+        //public Dictionary<string, object> fetchPartyList(Dictionary<string, object> sysCode)
         {
-
 
             List<ClsOrgInfo> clsOrgInfos = new List<ClsOrgInfo>();
 
@@ -24,6 +24,7 @@ namespace STORE.BIZModule
             clsOrgInfos = clsOrgInfos.OrderBy(o => o.ORG_CODE).ToList();
 
             return clsOrgInfos;
+
         }
         public void GetHierarchicalItem(DataTable _RptsDepartList, List<ClsOrgInfo> clsOrgInfos)
         {
@@ -47,6 +48,10 @@ namespace STORE.BIZModule
                     GetHierarchicalChildItem(_RptsDepartList, clsOrgInfo);
                     clsOrgInfo.children.OrderBy(o => o.ORG_CODE);
                     clsOrgInfos.Add(clsOrgInfo);
+                    if (clsOrgInfo.children.Count == 0)
+                    {
+                        clsOrgInfo.children = null;
+                    }
                 }
 
             }
@@ -76,6 +81,10 @@ namespace STORE.BIZModule
                 GetHierarchicalChildItem(_RptsDepartList, clsOrgInfo);
                 clsOrgInfo.children.OrderBy(o => o.ORG_CODE);
                 clsOrgInfos.children.Add(clsOrgInfo);
+                if (clsOrgInfo.children.Count == 0)
+                {
+                    clsOrgInfo.children = null;
+                }
             }
         }
 

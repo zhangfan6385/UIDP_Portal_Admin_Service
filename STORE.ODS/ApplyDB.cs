@@ -9,21 +9,58 @@ namespace STORE.ODS
     {
         DBTool db = new DBTool("");
         /// <summary>
+        /// 根据主键获取申请信息
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public DataTable getApplyInfo(string applyId)
+        {
+            string sql = "select * from ts_store_application a ";
+            sql += " where 1=1 and IS_DELETE=0 and APPLY_ID='" + applyId + "'";
+            return db.GetDataTable(sql);
+        }
+        /// <summary>
+        /// 查询申请表信息
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public DataTable fetchApplyInfoList(Dictionary<string, object> d)
+        {
+            string sql = @"select a.* from ts_store_application a ";
+            sql += " where a.IS_DELETE=0 ";
+            if (d.Count > 0)
+            {
+                if (d["APPLY_ID"] != null && d["APPLY_ID"].ToString() != "")
+                {
+                    sql += " and a.APPLY_ID ='" + d["APPLY_ID"].ToString()+"'";
+                }
+            }
+            //sql += " order by CHECK_STATE";
+            return db.GetDataTable(sql);
+        }
+
+
+        /// <summary>
         /// 查询申请平台信息
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
         public DataTable fetchApplyPlatList(Dictionary<string, object> d)
         {
-            string sql = @"select a.*,b.PLAT_NAME,b.PLAT_VERSION,b.MANAGE_TEL from ts_store_application a 
-            INNER JOIN ts_store_platform b on a.APPLY_RESOURCE_ID = b.PLAT_ID";
-            sql += " where a.APPLY_TYPE = 0 and a.IS_DELETE=0 ";
+            string sql = @"select a.*,b.PLAT_NAME,b.PLAT_VERSION,b.MANAGE_TEL,c.ORG_CODE from ts_store_application a 
+                INNER JOIN ts_store_platform b on a.APPLY_RESOURCE_ID = b.PLAT_ID
+                INNER JOIN ts_uidp_org c on b.MANAGE_ORG_ID=c.ORG_ID";
+            sql += " where a.APPLY_TYPE = 0 and a.IS_DELETE=0 and (APPLY_EXPIRET >='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' or APPLY_EXPIRET is null)";
             if (d.Count > 0)
             {
                 
                 if (d["PLAT_TYPE"] != null && d["PLAT_TYPE"].ToString() != "")
                 {
                     sql += " and b.PLAT_TYPE =" + d["PLAT_TYPE"].ToString();
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and c.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString()+"%'";
                 }
                 if (d["APPLY_ORG_NAME"] != null && d["APPLY_ORG_NAME"].ToString() != "")
                 {
@@ -63,14 +100,19 @@ namespace STORE.ODS
         /// <returns></returns>
         public DataTable fetchApplyComponentList(Dictionary<string, object> d)
         {
-            string sql = @"select a.*,b.COMPONENT_NAME,b.COMPONENT_CODE,b.MANAGE_TEL from ts_store_application a 
-            INNER JOIN ts_store_component b on a.APPLY_RESOURCE_ID = b.COMPONENT_ID ";
-            sql += " where a.APPLY_TYPE = 1 and a.IS_DELETE=0 ";
+            string sql = @"select a.*,b.COMPONENT_NAME,b.COMPONENT_CODE,b.MANAGE_TEL,c.ORG_CODE from ts_store_application a 
+            INNER JOIN ts_store_component b on a.APPLY_RESOURCE_ID = b.COMPONENT_ID 
+            INNER JOIN ts_uidp_org c on b.MANAGE_ORG_ID=c.ORG_ID";
+            sql += " where a.APPLY_TYPE = 1 and a.IS_DELETE=0 and (APPLY_EXPIRET >='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' or APPLY_EXPIRET is null)";
             if (d.Count > 0)
             {
                 if (d["APPLY_ORG_NAME"] != null && d["APPLY_ORG_NAME"].ToString() != "")
                 {
                     sql += " and a.APPLY_ORG_NAME like '%" + d["APPLY_ORG_NAME"].ToString() + "%'";
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and c.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString()+"%'";
                 }
                 if (d["PROJECT_NAME"] != null && d["PROJECT_NAME"].ToString() != "")
                 {
@@ -107,14 +149,19 @@ namespace STORE.ODS
         /// <returns></returns>
         public DataTable fetchApplyServiceList(Dictionary<string, object> d)
         {
-            string sql = @"select a.*,b.SERVICE_NAME,b.SERVICE_CODE,b.MANAGE_TEL from ts_store_application a 
-            INNER JOIN ts_store_service b on a.APPLY_RESOURCE_ID = b.SERVICE_ID";
-            sql += " where a.APPLY_TYPE = 2 and a.IS_DELETE=0 ";
+            string sql = @"select a.*,b.SERVICE_NAME,b.SERVICE_CODE,b.MANAGE_TEL,c.ORG_CODE from ts_store_application a 
+            INNER JOIN ts_store_service b on a.APPLY_RESOURCE_ID = b.SERVICE_ID
+            INNER JOIN ts_uidp_org c on b.MANAGE_ORG_ID=c.ORG_ID";
+            sql += " where a.APPLY_TYPE = 2 and a.IS_DELETE=0 and (APPLY_EXPIRET >='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' or APPLY_EXPIRET is null)";
             if (d.Count > 0)
             {
                 if (d["APPLY_ORG_NAME"] != null && d["APPLY_ORG_NAME"].ToString() != "")
                 {
                     sql += " and a.APPLY_ORG_NAME like '%" + d["APPLY_ORG_NAME"].ToString() + "%'";
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and c.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString()+"%'";
                 }
                 if (d["PROJECT_NAME"] != null && d["PROJECT_NAME"].ToString() != "")
                 {

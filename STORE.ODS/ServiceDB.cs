@@ -9,19 +9,35 @@ namespace STORE.ODS
     {
         DBTool db = new DBTool("");
         /// <summary>
-        /// 查询公告信息
+        /// 根据主键获取服务信息
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public DataTable getServiceInfo(Dictionary<string, object> d)
+        {
+            string sql = "select * from ts_store_service a ";
+            sql += " where 1=1 and IS_DELETE=0 and SERVICE_ID='"+ d["APPLY_RESOURCE_ID"] + "'";
+            return db.GetDataTable(sql);
+        }
+        /// <summary>
+        /// 查询服务信息
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
         public DataTable fetchServiceList(Dictionary<string, object> d)
         {
-            string sql = "select * from ts_store_service a ";
-            sql += " where 1=1 and IS_DELETE=0 ";
+            string sql = @"select a.*,b.ORG_CODE from ts_store_service a 
+                        INNER JOIN ts_uidp_org b on a.MANAGE_ORG_ID = b.ORG_ID";
+            sql += " where 1=1 and a.IS_DELETE=0 ";
             if (d.Count > 0)
             {
                 if (d["SERVICE_CODE"] != null && d["SERVICE_CODE"].ToString() != "")
                 {
                     sql += " and a.SERVICE_CODE like '%" + d["SERVICE_CODE"].ToString() + "%'";
+                }
+                if (d["MANAGE_ORG_CODE"] != null && d["MANAGE_ORG_CODE"].ToString() != "")
+                {
+                    sql += " and b.ORG_CODE like '" + d["MANAGE_ORG_CODE"].ToString() + "%'";
                 }
                 if (d["SERVICE_NAME"] != null && d["SERVICE_NAME"].ToString() != "")
                 {
@@ -76,7 +92,7 @@ namespace STORE.ODS
                 val = val.Substring(1);
             }
 
-            string sql = "INSERT INTO ts_store_service(" + col + ",CREATE_DATE,IS_DELETE) VALUES(" + val + ",'"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0)";
+            string sql = "INSERT INTO ts_store_service(" + col + ",CREATE_DATE,IS_DELETE) VALUES(" + val + ",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0)";
 
             return db.ExecutByStringResult(sql);
         }
@@ -126,7 +142,7 @@ namespace STORE.ODS
             return db.ExecutByStringResult(sql);
         }
 
-      
+
 
     }
 }

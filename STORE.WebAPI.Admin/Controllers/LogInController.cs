@@ -90,7 +90,8 @@ namespace STORE.WebAPI.Controllers
                                 dinfo["password"] = userdt.Rows[0]["USER_PASS"].ToString();
                                 dinfo["newpassword"] = password;
                                 dinfo["userid"] = userdt.Rows[0]["USER_ID"].ToString();
-                                mm.updatePasswordData(dinfo);
+                                //mm.updatePasswordData(dinfo);
+                                mm.updatePTRpass(dinfo);
                             }
                         }
                     }
@@ -99,6 +100,10 @@ namespace STORE.WebAPI.Controllers
                     if (dt == null || dt.Rows.Count == 0)
                     {
                         return Json(new { code = -1, message = "此用户不存在！" });
+                    }
+                    if (dt != null && !dt.Rows[0]["ORG_CODE"].ToString().StartsWith("100"))
+                    {
+                        return Json(new { code = -1, message = "此用户无访问后台权限！" });
                     }
                     if (password != dt.Rows[0]["USER_PASS"].ToString())
                     {

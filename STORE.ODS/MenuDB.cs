@@ -103,7 +103,7 @@ namespace STORE.ODS
         public DataTable fetchRoleMenuList(Dictionary<string, object> sysCode)
         {
 
-            string sql = "select p.* from ts_uidp_group_powerinfo p , ts_uidp_menuinfo m  where p.GROUP_ID = '"+ sysCode["roleId"] + "' AND p.MENU_ID = m.MENU_ID and m.SYS_CODE = '"+ sysCode["sysCode"] + "'";
+            string sql = "select p.* from ts_uidp_group_powerinfo p , ts_uidp_menuinfo m  where p.GROUP_ID = '"+ sysCode["roleId"] + "' AND p.MENU_ID = m.MENU_ID and m.SYS_CODE = '"+ sysCode["sysCode"] + "' order by m.MENU_ORDER";
             return db.GetDataTable(sql);
             
 
