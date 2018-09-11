@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using STORE.UTILITY;
 namespace STORE.ODS
@@ -63,6 +64,10 @@ namespace STORE.ODS
         {
             string col = "";
             string val = "";
+            if (d.Keys.Contains("ORG_CODE"))
+            {
+                d.Remove("ORG_CODE");
+            }
             foreach (var v in d)
             {
                 if (v.Value != null)
@@ -104,7 +109,10 @@ namespace STORE.ODS
         public string updatePlatformData(Dictionary<string, object> d)
         {
             string col = "";
-
+            if (d.Keys.Contains("ORG_CODE"))
+            {
+                d.Remove("ORG_CODE");
+            }
             foreach (var v in d)
             {
                 if (v.Value == null)
