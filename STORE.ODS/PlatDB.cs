@@ -17,7 +17,7 @@ namespace STORE.ODS
         public DataTable fetchPlatformList(Dictionary<string, object> d)
         {
             string sql = @"select a.*,b.ORG_CODE from ts_store_platform a 
-                        INNER JOIN ts_uidp_org b on a.MANAGE_ORG_ID = b.ORG_ID";
+                        LEFT JOIN ts_uidp_org b on a.MANAGE_ORG_ID = b.ORG_ID";
             sql += " where 1=1 and a.IS_DELETE=0 ";
             if (d.Count > 0)
             {
