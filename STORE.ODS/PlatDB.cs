@@ -78,7 +78,7 @@ namespace STORE.ODS
                 else
                 {
                     col += "," + v.Key;
-                    val += ",''";
+                    val += ",null";
                 }
             }
             if (col != "")

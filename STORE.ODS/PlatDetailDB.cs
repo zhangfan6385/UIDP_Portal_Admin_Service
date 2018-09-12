@@ -24,6 +24,7 @@ namespace STORE.ODS
                     sql += " and a.PLAT_ID = '" + d["PLAT_ID"].ToString() + "'";
                 }
             }
+            sql += " order by a.FILE_TYPE ";
             return db.GetDataTable(sql);
         }
         public string createPlatDetailArticle(Dictionary<string, object> d)

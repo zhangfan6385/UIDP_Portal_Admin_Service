@@ -24,6 +24,7 @@ namespace STORE.ODS
                     sql += " and a.COMPONENT_ID = '" + d["COMPONENT_ID"].ToString() + "'";
                 }
             }
+            sql += " order by a.FILE_TYPE ";
             return db.GetDataTable(sql);
         }
         public string createComponentDetailArticle(Dictionary<string, object> d)

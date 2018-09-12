@@ -24,6 +24,7 @@ namespace STORE.ODS
                     sql += " and a.SERVICE_ID = '" + d["SERVICE_ID"].ToString() + "'";
                 }
             }
+            sql += " order by a.FILE_TYPE ";
             return db.GetDataTable(sql);
         }
         public string createServiceDetailArticle(Dictionary<string, object> d)
