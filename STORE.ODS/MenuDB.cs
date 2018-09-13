@@ -143,7 +143,7 @@ namespace STORE.ODS
              "where ur.user_id = '" + sysCode["userId"].ToString() + "' " +
              " and f.SYS_CODE='"+ sysCode["sysCode"].ToString() + "' " +
                "and ur.group_id = rf.group_id " +
-               "and rf.menu_id = f.menu_id order by f.MENU_ORDER) a ";
+               "and rf.menu_id = f.menu_id ) a ";
             }
 
             //string sql = "SELECT * from ts_uidp_menuinfo";
