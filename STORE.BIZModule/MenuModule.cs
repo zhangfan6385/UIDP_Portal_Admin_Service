@@ -87,7 +87,7 @@ namespace STORE.BIZModule
 
                     clsMenuInfo.children = new List<ClsMenuInfo>();
                     GetHierarchicalChildItem(_RptsDepartList, clsMenuInfo);
-                    clsMenuInfo.children.OrderBy(o => o.MENU_ORDER);
+                    clsMenuInfo.children=clsMenuInfo.children.OrderBy(o => o.MENU_ORDER).ToList();
                     clsMenuInfos.Add(clsMenuInfo);
                 }
 
@@ -118,7 +118,7 @@ namespace STORE.BIZModule
 
                 clsMenuInfo.children = new List<ClsMenuInfo>();
                 GetHierarchicalChildItem(_RptsDepartList, clsMenuInfo);
-                clsMenuInfo.children.OrderBy(o => o.MENU_ORDER);
+                clsMenuInfo.children = clsMenuInfo.children.OrderBy(o => o.MENU_ORDER).ToList();
                 clsMenuInfos.children.Add(clsMenuInfo);
             }
         }

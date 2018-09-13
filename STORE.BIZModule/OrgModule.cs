@@ -46,7 +46,7 @@ namespace STORE.BIZModule
                     clsOrgInfo.ISINVALID = dr["ISINVALID"].ToString();
                     clsOrgInfo.children = new List<ClsOrgInfo>();
                     GetHierarchicalChildItem(_RptsDepartList, clsOrgInfo);
-                    clsOrgInfo.children.OrderBy(o => o.ORG_CODE);
+                    clsOrgInfo.children=clsOrgInfo.children.OrderBy(o => o.ORG_CODE).ToList();
                     clsOrgInfos.Add(clsOrgInfo);
                     if (clsOrgInfo.children.Count == 0)
                     {
@@ -79,7 +79,7 @@ namespace STORE.BIZModule
 
                 clsOrgInfo.children = new List<ClsOrgInfo>();
                 GetHierarchicalChildItem(_RptsDepartList, clsOrgInfo);
-                clsOrgInfo.children.OrderBy(o => o.ORG_CODE);
+                clsOrgInfo.children=clsOrgInfo.children.OrderBy(o => o.ORG_CODE).ToList();
                 clsOrgInfos.children.Add(clsOrgInfo);
                 if (clsOrgInfo.children.Count == 0)
                 {
