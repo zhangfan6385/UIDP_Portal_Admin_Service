@@ -89,7 +89,7 @@ namespace STORE.ODS
                     sql += " and APPLY_DATE between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
             }
-            sql += " order by CHECK_STATE";
+            sql += " order by CHECK_STATE,APPLY_DATE desc";
             return db.GetDataTable(sql);
         }
 
@@ -137,7 +137,7 @@ namespace STORE.ODS
                     sql += " and APPLY_DATE between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
             }
-            sql += " order by CHECK_STATE";
+            sql += " order by CHECK_STATE,APPLY_DATE desc";
             return db.GetDataTable(sql);
         }
 
@@ -186,7 +186,7 @@ namespace STORE.ODS
                     sql += " and APPLY_DATE between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
             }
-            sql += " order by CHECK_STATE";
+            sql += " order by CHECK_STATE,APPLY_DATE desc";
             return db.GetDataTable(sql);
         }
 

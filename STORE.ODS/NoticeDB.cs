@@ -57,6 +57,7 @@ namespace STORE.ODS
                     DateTime edate = Convert.ToDateTime(d["END_NOTICE_DATETIME"].ToString());
                     sql += " and NOTICE_DATETIME between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
+                sql += " order by NOTICE_DATETIME desc ";
             }
             return db.GetDataTable(sql);
         }

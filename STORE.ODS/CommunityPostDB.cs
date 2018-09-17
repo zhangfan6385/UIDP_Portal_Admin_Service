@@ -15,7 +15,7 @@ namespace STORE.ODS
         /// <returns></returns>
         public DataTable getCommunityPostList(Dictionary<string, object> d)
         {
-            string sql = "select a.* ,(select count(*) from ts_community_comment where POST_ID=a.POST_ID) COMMONT_COUNT,(select count(*) from ts_community_collection where POST_ID=a.POST_ID) COLLECTION_COUNT,case when POST_TYPE = 3 then '--' else SCORE_POINT end SCORE";
+            string sql = "select a.* ,(select count(*) from ts_community_comment where POST_ID=a.POST_ID) COMMONT_COUNT,(select count(*) from ts_community_collection where POST_ID=a.POST_ID) COLLECTION_COUNT,case when POST_TYPE = 3 then 0 else SCORE_POINT end SCORE";
             sql += " from ts_community_post a ";
             sql += " where  IS_DELETE=0 ";
             if (d.Count > 0)

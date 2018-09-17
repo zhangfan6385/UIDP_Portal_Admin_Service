@@ -103,7 +103,26 @@ namespace STORE.WebAPI.Controllers
             return Json(r);
         }
 
-
+        /// <summary>
+        /// 计算文件大小函数(保留两位小数),Size为字节大小
+        /// </summary>
+        /// <param name="Size">初始文件大小</param>
+        /// <returns></returns>
+        public static string CountSize(long Size)
+        {
+            string m_strSize = "";
+            long FactSize = 0;
+            FactSize = Size;
+            if (FactSize < 1024.00)
+                m_strSize = FactSize.ToString("F2") + " Byte";
+            else if (FactSize >= 1024.00 && FactSize < 1048576)
+                m_strSize = (FactSize / 1024.00).ToString("F2") + " K";
+            else if (FactSize >= 1048576 && FactSize < 1073741824)
+                m_strSize = (FactSize / 1024.00 / 1024.00).ToString("F2") + " M";
+            else if (FactSize >= 1073741824)
+                m_strSize = (FactSize / 1024.00 / 1024.00 / 1024.00).ToString("F2") + " G";
+            return m_strSize;
+        }
 
         /// <summary>
         /// 上传附件
@@ -123,7 +142,8 @@ namespace STORE.WebAPI.Controllers
                     String content = reader.ReadToEnd();
                     String name = file.FileName;
                     string suffix = name.Substring(name.LastIndexOf("."), (name.Length - name.LastIndexOf("."))); //扩展名
-                    double filesize =Math.Round(Convert.ToDouble(file.Length / 1024.00 / 1024.00),2);
+                    //double filesize =Math.Round(Convert.ToDouble(file.Length / 1024.00 / 1024.00),2);
+                    string filesize = CountSize(file.Length);
                     string filepath = @"\\UploadFiles\\platform\\" + Guid.NewGuid().ToString() + suffix;
                     String filename = System.IO.Directory.GetCurrentDirectory() + filepath;
                     if (System.IO.File.Exists(filename))
