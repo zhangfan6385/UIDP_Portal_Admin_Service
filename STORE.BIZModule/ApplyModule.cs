@@ -128,7 +128,7 @@ namespace STORE.BIZModule
             sb.Append(" CHECK_DATE=");
             sb.Append((d["CHECK_DATE"] == null|| d["CHECK_DATE"].ToString()=="") ? "null," :"'"+ GetIsNullStr(d["CHECK_DATE"]) + "', ");
             sb.Append(" APPLY_EXPIRET=");
-            sb.Append((d["APPLY_EXPIRET"] == null || d["CHECK_DATE"].ToString() == "") ? "null" : "'" + GetIsNullStr(d["APPLY_EXPIRET"]) + "' ");
+            sb.Append((d["APPLY_EXPIRET"] == null || d["APPLY_EXPIRET"].ToString() == "") ? "null" : "'" + GetIsNullStr(d["APPLY_EXPIRET"]) + "' ");
             sb.Append(" where APPLY_ID='" + GetIsNullStr(d["APPLY_ID"].ToString()) + "' ");
             sqllst.Add(sb.ToString());
             string col = "";
