@@ -210,6 +210,7 @@ namespace STORE.WebAPI.Controllers
             t["RECORD_ID"] = Guid.NewGuid().ToString();
             d["CHECK_DATE"] = "";
             d["SERVICE_CODE"] = "";
+            d["SERVICE_NAME"] = "";
             d["APPLY_EXPIRET"] = "";
             d["APPLY_TYPE"] = "";
             d["APPLY_EMAIL"] = "";
@@ -228,7 +229,9 @@ namespace STORE.WebAPI.Controllers
                         DataTable serviceInfo = sm.getServiceInfo(d);
                         if (serviceInfo != null && serviceInfo.Rows.Count > 0)
                         {
+                            d["SERVICE_NAME"] = serviceInfo.Rows[0]["SERVICE_NAME"].ToString();
                             d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
+                            t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
                         }
                     }
                     if (validate.Rows[0]["USE_TYPE"].ToString() == "0")//0开发1生产
@@ -272,8 +275,8 @@ namespace STORE.WebAPI.Controllers
                 string b = mm.examineApplyData(d, t);
                 if (b == "")
                 {
-                    SendEmail(t["RECORD_TITLE"].ToString(), "1312719913@qq.com", t["RECORD_CONTENT"].ToString());
-                    //SendEmail(t["RECORD_TITLE"].ToString(), t["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
+                    //SendEmail(t["RECORD_TITLE"].ToString(), "1312719913@qq.com", t["RECORD_CONTENT"].ToString());
+                    SendEmail(t["RECORD_TITLE"].ToString(), t["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
                     r["message"] = "成功";
                     r["code"] = 2000;
                 }
