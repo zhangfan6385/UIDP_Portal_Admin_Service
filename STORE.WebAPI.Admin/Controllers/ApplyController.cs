@@ -276,7 +276,7 @@ namespace STORE.WebAPI.Controllers
                 if (b == "")
                 {
                     //SendEmail(t["RECORD_TITLE"].ToString(), "1312719913@qq.com", t["RECORD_CONTENT"].ToString());
-                    SendEmail(t["RECORD_TITLE"].ToString(), t["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
+                    SendEmail(t["RECORD_TITLE"].ToString(), d["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
                     r["message"] = "成功";
                     r["code"] = 2000;
                 }
