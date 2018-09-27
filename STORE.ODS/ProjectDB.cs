@@ -124,7 +124,7 @@ namespace STORE.ODS
             {
                 if (v.Value == null)
                 {
-                    col += "," + v.Key + "=''";
+                    col += "," + v.Key + "=null";
                 }
                 else
                 {
