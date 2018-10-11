@@ -58,6 +58,10 @@ namespace STORE.BIZModule
                 DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
                 d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
             }
+            int SwiftNumber = Convert.ToInt32(db.getServiceNum());
+            SwiftNumber++;
+            string ServiceCode = "FW" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + SwiftNumber.ToString().PadLeft(3, '0');
+            d["SERVICE_CODE"] = ServiceCode;
             return db.createServiceArticle(d);
         }
         /// <summary>
@@ -71,6 +75,10 @@ namespace STORE.BIZModule
             {
                 DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
                 d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
+            }
+            if (db.checkService(d["SERVICE_ID"].ToString(), d["SERVICE_CODE"].ToString()) != "0")
+            {
+                return "操作失败，服务编号不能重复！";
             }
             return db.updateServiceData(d);
         }

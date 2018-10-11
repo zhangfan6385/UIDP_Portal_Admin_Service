@@ -45,6 +45,10 @@ namespace STORE.BIZModule
         public string createNoticeArticle(Dictionary<string, object> d)
         {
             d["NOTICE_ID"] = Guid.NewGuid().ToString();
+            int SwiftNumber = Convert.ToInt32(db.getNoticeNum());
+            SwiftNumber++;
+            string NoticeCode = "XW" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + SwiftNumber.ToString().PadLeft(3, '0');
+            d["NOTICE_CODE"] = NoticeCode;
             return db.createNoticeArticle(d);
         }
         /// <summary>
@@ -54,6 +58,10 @@ namespace STORE.BIZModule
         /// <returns></returns>
         public string updateNoticeData(Dictionary<string, object> d)
         {
+            if (db.checkNotice(d["NOTICE_ID"].ToString(), d["NOTICE_CODE"].ToString()) != "0")
+            {
+                return "操作失败，公告编号不能重复！";
+            }
             return db.updateNoticeData(d);
         }
         /// <summary>

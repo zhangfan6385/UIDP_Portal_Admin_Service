@@ -127,5 +127,27 @@ namespace STORE.ODS
             return db.GetDataTable(sql);
         }
 
+        public string getNoticeNum()
+        {
+            string num = "0";
+            string sql = "select count(*) from ts_store_notice where  CREATE_DATE  between '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-01" + " 00:00:00' and '" + DateTime.Now.Year + "-" + Convert.ToInt32(DateTime.Now.Month + 1) + "-01" + " 00:00:00'";
+            num = db.GetString(sql);
+            if (string.IsNullOrEmpty(num))
+            {
+                num = "0";
+            }
+            return num;
+        }
+        public string checkNotice(string id, string code)
+        {
+            string num = "0";
+            string sql = "select count(*) from ts_store_notice where NOTICE_ID !='" + id + "' and NOTICE_CODE='" + code + "' and IS_DELETE=0";
+            num = db.GetString(sql);
+            if (string.IsNullOrEmpty(num))
+            {
+                num = "0";
+            }
+            return num;
+        }
     }
 }

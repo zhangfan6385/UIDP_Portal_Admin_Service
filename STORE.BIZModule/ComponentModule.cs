@@ -51,6 +51,10 @@ namespace STORE.BIZModule
                 DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
                 d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
             }
+            int SwiftNumber = Convert.ToInt32(db.getComponentNum());
+            SwiftNumber++;
+            string ComponentCode = "ZJ"+DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0')  + SwiftNumber.ToString().PadLeft(3, '0');
+            d["COMPONENT_CODE"] = ComponentCode;
             return db.createComponentArticle(d);
         }
         /// <summary>
@@ -64,6 +68,10 @@ namespace STORE.BIZModule
             {
                 DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
                 d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
+            }
+            if (db.checkComponent(d["COMPONENT_ID"].ToString(), d["COMPONENT_CODE"].ToString())!="0")
+            {
+                return "操作失败，组件编号不能重复！";
             }
             return db.updateComponentData(d);
         }

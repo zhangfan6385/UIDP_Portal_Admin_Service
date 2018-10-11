@@ -10,7 +10,7 @@ namespace STORE.ODS
     {
         DBTool db = new DBTool("");
         /// <summary>
-        /// 查询公告信息
+        /// 查询组件信息
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
@@ -86,7 +86,7 @@ namespace STORE.ODS
                 val = val.Substring(1);
             }
 
-            string sql = "INSERT INTO ts_store_component(" + col + ",CREATE_DATE,IS_DELETE) VALUES(" + val + ",'"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0)";
+            string sql = "INSERT INTO ts_store_component(" + col + ",CREATE_DATE,IS_DELETE) VALUES(" + val + ",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0)";
 
             return db.ExecutByStringResult(sql);
         }
@@ -139,7 +139,27 @@ namespace STORE.ODS
             return db.ExecutByStringResult(sql);
         }
 
-      
-
+        public string getComponentNum()
+        {
+            string num = "0";
+            string sql = "select count(*) from ts_store_component where  CREATE_DATE  between '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-01" + " 00:00:00' and '" + DateTime.Now.Year + "-" + Convert.ToInt32(DateTime.Now.Month + 1) + "-01" + " 00:00:00'";
+            num = db.GetString(sql);
+            if (string.IsNullOrEmpty(num))
+            {
+                num = "0";
+            }
+            return num;
+        }
+        public string checkComponent(string id, string code)
+        {
+            string num = "0";
+            string sql = "select count(*) from ts_store_component where COMPONENT_ID !='" + id + "' and COMPONENT_CODE='" + code +"' and IS_DELETE=0";
+            num = db.GetString(sql);
+            if (string.IsNullOrEmpty(num))
+            {
+                num = "0";
+            }
+            return num;
+        }
     }
 }
