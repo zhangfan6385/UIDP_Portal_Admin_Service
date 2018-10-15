@@ -105,7 +105,8 @@ namespace STORE.WebAPI.Controllers
         /// <param name="email">收件人地址</param>
         /// <param name="content">邮件内容</param>
         /// <param name="filepath">文件的相对路径</param>
-        public void SendEmail(string subject, string email, string content, string filepath = null)
+
+        public async Task<string> SendEmail(string subject, string email, string content, string filepath = null)
         {
             Dictionary<string, object> d = new Dictionary<string, object>();
             d["CONF_CODE"] = "'SendMail','SendName','SmtpAddress','Port','Auth_Code'";
@@ -179,12 +180,11 @@ namespace STORE.WebAPI.Controllers
             //正文内容
             message.Body = multipart;
 
-
-            using (var client = new SmtpClient())
+           using (var client = new SmtpClient())
             {
                 //连接到Smtp服务器
                 //client.Connect("smtp.163.com", 25, false);
-                client.Connect(smtpAddress, port, false);
+                 client.Connect(smtpAddress, port, true);
                 //登陆
                 //client.Authenticate("Maverick_man@163.com", "1qaz2wsx");
                 client.Authenticate(sendMail, password);
@@ -193,6 +193,7 @@ namespace STORE.WebAPI.Controllers
                 //断开
                 client.Disconnect(true);
             }
+            return "";
         }
 
         /// <summary>
@@ -201,7 +202,8 @@ namespace STORE.WebAPI.Controllers
         /// <param name="value"></param>
         /// <returns></returns>
         [HttpPost("examineApplyData")]
-        public IActionResult examineApplyData([FromBody]JObject[] value)
+        //public IActionResult examineApplyData([FromBody]JObject[] value)
+        public async Task<IActionResult> examineApplyData([FromBody]JObject[] value)
         {
             Dictionary<string, object> d = value[0].ToObject<Dictionary<string, object>>();
             Dictionary<string, object> t = value[1].ToObject<Dictionary<string, object>>();
@@ -230,8 +232,10 @@ namespace STORE.WebAPI.Controllers
                         if (serviceInfo != null && serviceInfo.Rows.Count > 0)
                         {
                             d["SERVICE_NAME"] = serviceInfo.Rows[0]["SERVICE_NAME"].ToString();
-                            d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
-                            t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
+                            d["SERVICE_CODE"] = accessToken;
+                            t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString();
+                            //d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
+                            //t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
                         }
                     }
                     if (validate.Rows[0]["USE_TYPE"].ToString() == "0")//0开发1生产
@@ -276,7 +280,7 @@ namespace STORE.WebAPI.Controllers
                 if (b == "")
                 {
                     //SendEmail(t["RECORD_TITLE"].ToString(), "1312719913@qq.com", t["RECORD_CONTENT"].ToString());
-                    SendEmail(t["RECORD_TITLE"].ToString(), d["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
+                    await SendEmail(t["RECORD_TITLE"].ToString(), d["APPLY_EMAIL"].ToString(), t["RECORD_CONTENT"].ToString());
                     r["message"] = "成功";
                     r["code"] = 2000;
                 }
