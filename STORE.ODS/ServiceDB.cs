@@ -63,6 +63,7 @@ namespace STORE.ODS
                     sql += " and SERVICE_PUBLISHDATE between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
             }
+            sql += " order by SERVICE_CODE desc ";
             return db.GetDataTable(sql);
         }
 

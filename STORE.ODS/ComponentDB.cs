@@ -52,6 +52,7 @@ namespace STORE.ODS
                     sql += " and COMPONENT_PUBLISHDATE between '" + bdate.Year + "-" + bdate.Month + "-" + bdate.Day + " 00:00:00' and '" + edate.Year + "-" + edate.Month + "-" + edate.Day + " 23:59:59'";
                 }
             }
+            sql += " order by COMPONENT_CODE desc";
             return db.GetDataTable(sql);
         }
 
