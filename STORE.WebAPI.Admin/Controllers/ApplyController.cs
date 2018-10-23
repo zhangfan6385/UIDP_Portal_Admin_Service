@@ -244,6 +244,7 @@ namespace STORE.WebAPI.Controllers
                             d["SERVICE_NAME"] = serviceInfo.Rows[0]["SERVICE_NAME"].ToString();
                             d["SERVICE_CODE"] = accessToken;
                             t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString();
+                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             //d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
                             //t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
                         }
@@ -253,7 +254,7 @@ namespace STORE.WebAPI.Controllers
                         q["CONF_CODE"] = "DEVELOP_EXPIRET";
                         if (d.Keys.Contains("CHECK_DATE") && (d["CHECK_DATE"] == null || d["CHECK_DATE"].ToString() == ""))
                         {
-                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                            //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             double duration = Convert.ToDouble(cm.getConfigInfo(q));
                             d["APPLY_EXPIRET"] = timestamp.AddDays(duration);
                         }
@@ -264,7 +265,7 @@ namespace STORE.WebAPI.Controllers
                         if (d.Keys.Contains("CHECK_DATE") && d["CHECK_DATE"] == null && d["CHECK_DATE"].ToString() == "")
                         {
                             double duration = Convert.ToDouble(cm.getConfigInfo(q));
-                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                            //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             d["APPLY_EXPIRET"] = timestamp.AddDays(duration);
                         }
                     }
