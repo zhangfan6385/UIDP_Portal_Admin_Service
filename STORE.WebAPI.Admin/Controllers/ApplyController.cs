@@ -108,91 +108,101 @@ namespace STORE.WebAPI.Controllers
 
         public async Task<string> SendEmail(string subject, string email, string content, string filepath = null)
         {
-            Dictionary<string, object> d = new Dictionary<string, object>();
-            d["CONF_CODE"] = "'SendMail','SendName','SmtpAddress','Port','Auth_Code'";
-            string sendUserName = "";
-            string sendMail = "";
-            string smtpAddress = "";
-            int port = 25;
-            string password = "";
-            DataTable smtpdt = cm.getSmtpConfig(d);
-            if (smtpdt == null || smtpdt.Rows.Count == 0)
+            try
             {
-                throw new Exception("邮件参数配置发生错误！");
-            }
-            foreach (DataRow row in smtpdt.Rows)
-            {
-                if (row["CONF_CODE"].ToString()== "SendMail") {
-                    sendMail= row["CONF_VALUE"].ToString();
-                }
-                if (row["CONF_CODE"].ToString() == "SendName")
+                //System.Threading.Thread.Sleep(1000);
+                Dictionary<string, object> d = new Dictionary<string, object>();
+                d["CONF_CODE"] = "'SendMail','SendName','SmtpAddress','Port','Auth_Code'";
+                string sendUserName = "";
+                string sendMail = "";
+                string smtpAddress = "";
+                int port = 25;
+                string password = "";
+                DataTable smtpdt = cm.getSmtpConfig(d);
+                if (smtpdt == null || smtpdt.Rows.Count == 0)
                 {
-                    sendUserName = row["CONF_VALUE"].ToString();
+                    throw new Exception("邮件参数配置发生错误！");
                 }
-                if (row["CONF_CODE"].ToString() == "SmtpAddress")
+                foreach (DataRow row in smtpdt.Rows)
                 {
-                    smtpAddress = row["CONF_VALUE"].ToString();
+                    if (row["CONF_CODE"].ToString() == "SendMail")
+                    {
+                        sendMail = row["CONF_VALUE"].ToString();
+                    }
+                    if (row["CONF_CODE"].ToString() == "SendName")
+                    {
+                        sendUserName = row["CONF_VALUE"].ToString();
+                    }
+                    if (row["CONF_CODE"].ToString() == "SmtpAddress")
+                    {
+                        smtpAddress = row["CONF_VALUE"].ToString();
+                    }
+                    if (row["CONF_CODE"].ToString() == "Port")
+                    {
+                        port = Convert.ToInt32(row["CONF_VALUE"].ToString());
+                    }
+                    if (row["CONF_CODE"].ToString() == "Auth_Code")
+                    {
+                        password = row["CONF_VALUE"].ToString();
+                    }
                 }
-                if (row["CONF_CODE"].ToString() == "Port")
-                {
-                    port =Convert.ToInt32(row["CONF_VALUE"].ToString());
-                }
-                if (row["CONF_CODE"].ToString() == "Auth_Code")
-                {
-                     password = row["CONF_VALUE"].ToString();
-                }
-            }
-        
-            var message = new MimeMessage();
-            //发信人
-            message.From.Add(new MailboxAddress(sendUserName, sendMail));
-            //收信人
-            message.To.Add(new MailboxAddress("", email));
-            //标题
-            message.Subject = subject;
-            //产生一个支持Html的TextPart
-            var body = new TextPart(TextFormat.Html)
-            {
-                Text = content
-            };
-            //先产生一个
-            var multipart = new Multipart("mixed");
-            //添加正文内容
-            multipart.Add(body);
-            if (!string.IsNullOrWhiteSpace(filepath))
-            {
-                ////生产一个绝对路径
-                ////filepath = "Upload//NewsPhoto//readme.txt";
-                //var absolutePath = Path.Combine(_hostingEnv.WebRootPath, string.Format(filepath));
-                ////附件
-                //var attachment = new MimePart()
-                //{
-                //    //读取文件(只能用绝对路径)
-                //    ContentObject = new ContentObject(File.OpenRead(absolutePath), ContentEncoding.Default),
-                //    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                //    ContentTransferEncoding = ContentEncoding.Base64,
-                //    //文件名字
-                //    FileName = Path.GetFileName(absolutePath)
-                //};
-                ////添加附件
-                //multipart.Add(attachment);
-            }
-            //正文内容
-            message.Body = multipart;
 
-           using (var client = new SmtpClient())
-            {
-                //连接到Smtp服务器
-                //client.Connect("smtp.163.com", 25, false);
-                 client.Connect(smtpAddress, port, true);
-                //登陆
-                //client.Authenticate("Maverick_man@163.com", "1qaz2wsx");
-                client.Authenticate(sendMail, password);
-                //发送
-                client.Send(message);
-                //断开
-                client.Disconnect(true);
+                var message = new MimeMessage();
+                //发信人
+                message.From.Add(new MailboxAddress(sendUserName, sendMail));
+                //收信人
+                message.To.Add(new MailboxAddress("", email));
+                //标题
+                message.Subject = subject;
+                //产生一个支持Html的TextPart
+                var body = new TextPart(TextFormat.Html)
+                {
+                    Text = content
+                };
+                //先产生一个
+                var multipart = new Multipart("mixed");
+                //添加正文内容
+                multipart.Add(body);
+                if (!string.IsNullOrWhiteSpace(filepath))
+                {
+                    ////生产一个绝对路径
+                    ////filepath = "Upload//NewsPhoto//readme.txt";
+                    //var absolutePath = Path.Combine(_hostingEnv.WebRootPath, string.Format(filepath));
+                    ////附件
+                    //var attachment = new MimePart()
+                    //{
+                    //    //读取文件(只能用绝对路径)
+                    //    ContentObject = new ContentObject(File.OpenRead(absolutePath), ContentEncoding.Default),
+                    //    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                    //    ContentTransferEncoding = ContentEncoding.Base64,
+                    //    //文件名字
+                    //    FileName = Path.GetFileName(absolutePath)
+                    //};
+                    ////添加附件
+                    //multipart.Add(attachment);
+                }
+                //正文内容
+                message.Body = multipart;
+
+                using (var client = new SmtpClient())
+                {
+                    //连接到Smtp服务器
+                    //client.Connect("smtp.163.com", 25, false);
+                    client.Connect(smtpAddress, port, true);
+                    //登陆
+                    //client.Authenticate("Maverick_man@163.com", "1qaz2wsx");
+                    client.Authenticate(sendMail, password);
+                    //发送
+                    client.Send(message);
+                    //断开
+                    client.Disconnect(true);
+                }
             }
+            catch (Exception)
+            {
+                return "";
+            }
+
             return "";
         }
 
