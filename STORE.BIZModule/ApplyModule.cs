@@ -158,7 +158,7 @@ namespace STORE.BIZModule
             string sql = "INSERT INTO ts_store_application_record(" + col + ",CREATE_DATE,IS_DELETE,RECORD_ISREAD) VALUES(" + val + ",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0,0)";
             sqllst.Add(sql);
             //
-
+            if (d["CHECK_STATE"].ToString()=="1") { 
             switch (d["APPLY_TYPE"].ToString())
             {
                 case "0"://平台
@@ -178,8 +178,9 @@ namespace STORE.BIZModule
                     break;
             }
 
+            }
 
-           
+
             //return db.examineApplyData(d);
             return db.examineApply(sqllst);
         }
