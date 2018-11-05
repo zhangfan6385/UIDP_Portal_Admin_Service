@@ -49,10 +49,11 @@ namespace STORE.WebAPI.Controllers
             //foreach (var item in c)
             //{
             //    item.children.Count();
-                
+
             //}
-            return JsonConvert.SerializeObject(c);
-            
+            var str = JsonConvert.SerializeObject(c);
+            //var ddd= str.Replace(",\"children\":null", "");
+            return str;
         }
 
         /// <summary>

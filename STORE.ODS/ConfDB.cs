@@ -35,6 +35,15 @@ namespace STORE.ODS
             return db.GetDataTable(sql);
         }
         /// <summary>
+        /// 获取系统配置颜色
+        /// </summary>
+        /// <returns></returns>
+        public DataTable SysColor(Dictionary<string, object> d)
+        {
+            string sql = "select CONF_VALUE from ts_uidp_config where CONF_CODE='COLOR'";
+            return db.GetDataTable(sql);
+        }
+        /// <summary>
         /// 登录获取系统配置信息
         /// </summary>
         /// <param name="d"></param>
