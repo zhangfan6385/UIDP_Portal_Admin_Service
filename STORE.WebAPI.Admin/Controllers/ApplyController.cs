@@ -31,7 +31,7 @@ namespace STORE.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("fetchApplyPlatList")]
-        public IActionResult fetchApplyPlatList(string limit, string page, int PLAT_TYPE,string MANAGE_ORG_CODE, string APPLY_ORG_NAME, string PROJECT_NAME, string BEGIN_APPLY_DATE, string END_APPLY_DATE)
+        public IActionResult fetchApplyPlatList(string limit, string page, int PLAT_TYPE, string MANAGE_ORG_CODE, string APPLY_ORG_NAME, string PROJECT_NAME, string BEGIN_APPLY_DATE, string END_APPLY_DATE)
         {
             //UserModule user = new UserModule();
             //string Admin = user.getAdminCode();
@@ -244,7 +244,7 @@ namespace STORE.WebAPI.Controllers
                             d["SERVICE_NAME"] = serviceInfo.Rows[0]["SERVICE_NAME"].ToString();
                             d["SERVICE_CODE"] = accessToken;
                             t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString();
-                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                            //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             //d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
                             //t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
                         }
@@ -254,7 +254,7 @@ namespace STORE.WebAPI.Controllers
                         q["CONF_CODE"] = "DEVELOP_EXPIRET";
                         if (d.Keys.Contains("CHECK_DATE") && (d["CHECK_DATE"] == null || d["CHECK_DATE"].ToString() == ""))
                         {
-                            //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             double duration = Convert.ToDouble(cm.getConfigInfo(q));
                             d["APPLY_EXPIRET"] = timestamp.AddDays(duration);
                         }
@@ -262,10 +262,10 @@ namespace STORE.WebAPI.Controllers
                     else if (validate.Rows[0]["USE_TYPE"].ToString() == "1")
                     {
                         q["CONF_CODE"] = "PRODUCT_EXPIRET";
-                        if (d.Keys.Contains("CHECK_DATE") && d["CHECK_DATE"] == null && d["CHECK_DATE"].ToString() == "")
+                        if (d.Keys.Contains("CHECK_DATE") && string.IsNullOrEmpty(d["CHECK_DATE"].ToString()))
                         {
                             double duration = Convert.ToDouble(cm.getConfigInfo(q));
-                            //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                            d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             d["APPLY_EXPIRET"] = timestamp.AddDays(duration);
                         }
                     }
