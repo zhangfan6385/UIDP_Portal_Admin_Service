@@ -98,7 +98,7 @@ namespace STORE.ODS
                 val = val.Substring(1);
             }
 
-            string sql = "INSERT INTO ts_store_service(" + col + ",CREATE_DATE,IS_DELETE) VALUES(" + val + ",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0)";
+            string sql = "INSERT INTO ts_store_service(" + col + ",CREATE_DATE,IS_DELETE,INVOKE_TIMES) VALUES(" + val + ",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',0,0)";
 
             return db.ExecutByStringResult(sql);
         }
