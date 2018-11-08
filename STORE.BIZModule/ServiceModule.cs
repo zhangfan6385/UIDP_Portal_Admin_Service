@@ -56,7 +56,7 @@ namespace STORE.BIZModule
             if (d["MANAGE_ORG_ID"] != null && d["MANAGE_ORG_ID"].ToString() != "")
             {
                 DataTable dta = orgdb.GetOrgById(d["MANAGE_ORG_ID"].ToString());
-                d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_NAME"].ToString();
+                d["MANAGE_ORG_NAME"] = dta.Rows[0]["ORG_SHORT_NAME"].ToString();
             }
             int SwiftNumber = Convert.ToInt32(db.getServiceNum());
             SwiftNumber++;
