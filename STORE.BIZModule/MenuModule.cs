@@ -71,7 +71,7 @@ namespace STORE.BIZModule
             {
 
                 ClsMenuInfo clsMenuInfo;
-                foreach (DataRow dr in _RptsDepartList.Select("  MENU_PROP='1' and ( MENU_ID_UPPER is null or MENU_ID_UPPER='') "))
+                foreach (DataRow dr in _RptsDepartList.Select("  MENU_ID_UPPER is null or MENU_ID_UPPER='' "))
                 {
                     clsMenuInfo = new ClsMenuInfo();
                     clsMenuInfo.SYS_CODE = dr["SYS_CODE"].ToString();
