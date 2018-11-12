@@ -87,15 +87,15 @@ namespace STORE.WebAPI.Controllers
                             Dictionary<string, object> dinfo = new Dictionary<string, object>();
                             if (password != userdt.Rows[0]["USER_PASS"].ToString())
                             {
-                                dinfo["password"] = UIDP.Security.SecurityHelper.StringToMD5Hash(userdt.Rows[0]["USER_PASS"].ToString());
-                                dinfo["newpassword"] = UIDP.Security.SecurityHelper.StringToMD5Hash(password);
+                                dinfo["password"] = Security.SecurityHelper.StringToMD5Hash(userdt.Rows[0]["USER_PASS"].ToString());
+                                dinfo["newpassword"] = Security.SecurityHelper.StringToMD5Hash(password);
                                 dinfo["userid"] = userdt.Rows[0]["USER_ID"].ToString();
                                 //mm.updatePasswordData(dinfo);
                                 mm.updatePTRpass(dinfo);
                             }
                         }
                     }
-                    password = UIDP.Security.SecurityHelper.StringToMD5Hash(password);
+                    password = Security.SecurityHelper.StringToMD5Hash(password);
                     DataTable dt = um.getUserInfoByName(username);
                     if (dt == null || dt.Rows.Count == 0)
                     {
@@ -205,7 +205,7 @@ namespace STORE.WebAPI.Controllers
         {
             Dictionary<string, object> d = value.ToObject<Dictionary<string, object>>();
             string userCode = d["userCode"] == null ? "" : d["userCode"].ToString();
-            string password = d["password"] == null ? "" : UIDP.Security.SecurityHelper.StringToMD5Hash(d["password"].ToString());
+            string password = d["password"] == null ? "" : STORE.Security.SecurityHelper.StringToMD5Hash(d["password"].ToString());
             string userId = "";
             string userName = "云主机推送服务";
             string accessToken = "";

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
+using System.Linq;
 using System.Text;
 using STORE.ODS;
 using STORE.UTILITY;
@@ -90,7 +91,7 @@ namespace STORE.BIZModule
                 }
             }
 			 if (d["USER_PASS"]!=null&& d["USER_PASS"].ToString()!="") {
-                d["USER_PASS"] = UIDP.Security.SecurityHelper.StringToMD5Hash(d["USER_PASS"].ToString());
+                d["USER_PASS"] = STORE.Security.SecurityHelper.StringToMD5Hash(d["USER_PASS"].ToString());
             }
             return db.createUserArticle(d);
         }
@@ -108,7 +109,7 @@ namespace STORE.BIZModule
         }
         public string updatePasswordData(Dictionary<string, object> d)
         {
-            if (d["roleLevel"].ToString() == "admin")
+            if (d.Keys.Contains("roleLevel")&&d["roleLevel"].ToString() == "admin")
             {
                 string userId = getAdminCode();
                 string pass = getAdminPass();
@@ -120,6 +121,8 @@ namespace STORE.BIZModule
             }
             else
             {
+                d["password"] = Security.SecurityHelper.StringToMD5Hash(d["password"].ToString());
+                d["newpassword"] = Security.SecurityHelper.StringToMD5Hash(d["newpassword"].ToString());
                 DataTable dt = db.IsInvalidPassword(d);
                 if (dt == null || dt.Rows.Count == 0)
                 {
@@ -133,7 +136,7 @@ namespace STORE.BIZModule
 			 string newpass = "";
             if (d["USER_PASS"] != null && d["USER_PASS"].ToString() != "")
             {
-                newpass = UIDP.Security.SecurityHelper.StringToMD5Hash(d["USER_PASS"].ToString());
+                newpass = STORE.Security.SecurityHelper.StringToMD5Hash(d["USER_PASS"].ToString());
             }
             //if (d["USER_CODE"] != null)
             //{

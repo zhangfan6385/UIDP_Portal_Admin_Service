@@ -91,7 +91,7 @@ namespace STORE.ODS
         }
         public string updatePasswordData(Dictionary<string, object> d)
         {
-            string sql = "update  ts_uidp_userinfo set USER_PASS=" + d["newpassword"].ToString() + " where USER_ID='" + d["userid"].ToString() + "' and USER_PASS='" + d["password"].ToString() + "' ;";
+            string sql = "update  ts_uidp_userinfo set USER_PASS='" + d["newpassword"].ToString() + "' where USER_ID='" + d["userid"].ToString() + "' and USER_PASS='" +d["password"].ToString() + "' ;";
 
             return db.ExecutByStringResult(sql);
         }
@@ -109,7 +109,7 @@ namespace STORE.ODS
         }
         public DataTable IsInvalidPassword(Dictionary<string, object> d)
         {
-            string sql = "select * from  ts_uidp_userinfo  where USER_ID='" + d["userid"].ToString() + "' and USER_PASS='" + d["password"].ToString() + "' ;";
+            string sql = "select * from  ts_uidp_userinfo  where USER_ID='" + d["userid"].ToString() + "' and USER_PASS='" + Security.SecurityHelper.StringToMD5Hash(d["password"].ToString()) + "' ;";
 
             return db.GetDataTable(sql);
         }

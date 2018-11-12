@@ -142,8 +142,9 @@ namespace STORE.ODS
                   "ts_uidp_menuinfo        f " +
              "where ur.user_id = '" + sysCode["userId"].ToString() + "' " +
              " and f.SYS_CODE='"+ sysCode["sysCode"].ToString() + "' " +
-               "and ur.group_id = rf.group_id " +
-               "and rf.menu_id = f.menu_id ) a  union select * from ts_uidp_menuinfo where MENU_ID='0fea0012-b259-43b9-9c49-1a993cf3defa'";
+             "and ur.group_id = rf.group_id " +
+             "and rf.menu_id = f.menu_id ) a  union select * from ts_uidp_menuinfo where MENU_ID='0fea0012-b259-43b9-9c49-1a993cf3defa'";
+             //"and rf.menu_id = f.menu_id ) a ";
             }
 
             //string sql = "SELECT * from ts_uidp_menuinfo";
