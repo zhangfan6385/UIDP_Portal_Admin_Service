@@ -105,6 +105,7 @@ namespace STORE.BIZModule
         }
         public string updatePTRpass(Dictionary<string, object> d)
         {
+            d["newpassword"] = Security.SecurityHelper.StringToMD5Hash(d["newpassword"].ToString());
             return db.updatePTRpass(d);
         }
         public string updatePasswordData(Dictionary<string, object> d)

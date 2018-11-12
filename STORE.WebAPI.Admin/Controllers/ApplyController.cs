@@ -15,6 +15,8 @@ using STORE.UTILITY;
 using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace STORE.WebAPI.Controllers
 {
@@ -26,6 +28,7 @@ namespace STORE.WebAPI.Controllers
         ApplyRecordModule rm = new ApplyRecordModule();
         ConfModule cm = new ConfModule();
         ServiceModule sm = new ServiceModule();
+        public static IConfiguration Configuration { get; set; }
         /// <summary>
         /// 查询配置信息
         /// </summary>
@@ -232,6 +235,17 @@ namespace STORE.WebAPI.Controllers
                 d["APPLY_TYPE"] = validate.Rows[0]["APPLY_TYPE"].ToString();
                 d["APPLY_RESOURCE_ID"] = validate.Rows[0]["APPLY_RESOURCE_ID"].ToString();
                 d["APPLY_EMAIL"] = validate.Rows[0]["APPLY_EMAIL"].ToString();
+                var builder = new ConfigurationBuilder()
+.SetBasePath(Directory.GetCurrentDirectory())
+.AddJsonFile("appsettings.json");
+                Configuration = builder.Build();
+                string Content1 = Configuration["Content1"].ToString();
+                string Content2 = Configuration["Content2"].ToString();
+                string Content3 = Configuration["Content3"].ToString();
+                string Content4 = Configuration["Content4"].ToString();
+                string Telephone = Configuration["Telephone"].ToString();
+                string Unit = Configuration["Unit"].ToString();
+                t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace("&Content1", Content1).Replace("&Content2", Content2).Replace("&Content3", Content3).Replace("&Content4", Content4).Replace("&Telephone", Telephone).Replace("&Unit", Unit);
                 if (validate != null && validate.Rows.Count > 0 && validate.Rows[0]["CHECK_STATE"].ToString() != d["CHECK_STATE"].ToString())
                 {
                     DateTime timestamp = DateTime.Now;
@@ -243,7 +257,7 @@ namespace STORE.WebAPI.Controllers
                         {
                             d["SERVICE_NAME"] = serviceInfo.Rows[0]["SERVICE_NAME"].ToString();
                             d["SERVICE_CODE"] = accessToken;
-                            t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString();
+                            //t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString();
                             //d["CHECK_DATE"] = timestamp.ToString("yyyy-MM-dd HH:mm:ss");
                             //d["SERVICE_CODE"] = serviceInfo.Rows[0]["SERVICE_URL"].ToString() + "?token=" + accessToken;
                             //t["RECORD_CONTENT"] = t["RECORD_CONTENT"].ToString().Replace(d["SERVICE_NAME"].ToString(), d["SERVICE_NAME"].ToString()+"("+ d["SERVICE_CODE"].ToString()+")");
