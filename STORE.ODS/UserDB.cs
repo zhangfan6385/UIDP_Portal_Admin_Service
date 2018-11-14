@@ -44,7 +44,7 @@ namespace STORE.ODS
             list.Add(sql);
             StringBuilder sb = new StringBuilder();
             sb.Append("INSERT INTO ts_uidp_userinfo(USER_ID,USER_DOMAIN,USER_CODE,USER_NAME,USER_PASS,PHONE_MOBILE,PHONE_OFFICE," +
-                "USER_EMAIL,USER_IP,USER_SEX,AUTHENTICATION_TYPE,FLAG,USER_TYPE,REG_TIME,SCORE,REMARK) VALUES(");
+                "USER_EMAIL,USER_IP,USER_SEX,AUTHENTICATION_TYPE,FLAG,USER_TYPE,REG_TIME,SCORE,USER_TYPE,REMARK) VALUES(");
             sb.Append("'");
             sb.Append(d["USER_ID"] == null ? "" : d["USER_ID"] + "', ");
             sb.Append("'");
@@ -67,7 +67,8 @@ namespace STORE.ODS
             sb.Append(d["AUTHENTICATION_TYPE"] == null ? "" : d["AUTHENTICATION_TYPE"] + ", ");
             sb.Append(d["FLAG"] == null ? "1" : d["FLAG"] + ", ");
             sb.Append(d["USER_TYPE"] == null ? "0" : d["USER_TYPE"] + ",");
-            sb.Append("'"+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +"',0,'");
+            sb.Append("'"+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +"',0,");
+            sb.Append(d["USER_TYPE"] == null ? "1" : d["USER_TYPE"].ToString() + ",'");
             sb.Append(d["REMARK"] == null ? "" : d["REMARK"] + "' )");
             list.Add(sb.ToString());
             return db.Executs(list);
@@ -152,7 +153,16 @@ namespace STORE.ODS
             sb.Append(" FLAG=");
             sb.Append(d["FLAG"] == null ? "1" : d["FLAG"] + ", ");
             sb.Append(" REMARK='");
-            sb.Append(d["REMARK"] == null ? "" : d["REMARK"] + "' ");
+            sb.Append(d["REMARK"] == null ? "" : d["REMARK"] + "', ");
+            sb.Append(" USER_TYPE=");
+            if (d["USER_TYPE"] == null || d["USER_TYPE"].ToString() == "" || d["USER_TYPE"].ToString() == "1")
+            {
+                sb.Append("1");//普通用户
+            }
+            else
+            {
+                sb.Append("0");//管理员
+            }
             sb.Append(" where USER_ID='" + d["USER_ID"].ToString() + "' ");
             return db.ExecutByStringResult(sb.ToString());
         }
