@@ -81,26 +81,35 @@ namespace STORE.WebAPI.Controllers
             Dictionary<string, object> r = new Dictionary<string, object>();
             try
             {
-                DataTable dt = null;
-                string orgpcode = null;
-                if (d.Keys.Contains("parentId") && d["parentId"] != null)
+                //DataTable dt = null;
+                //string orgpcode = null;
+                //if (d.Keys.Contains("parentId") && d["parentId"] != null)
+                //{
+                //    dt = mm.GetOrgById(d["parentId"].ToString());
+                //}
+                //else {
+                //    d["parentId"] = null;
+                //}
+                //if (dt != null)
+                //{
+                //    orgpcode = dt.Rows[0]["ORG_CODE"].ToString();
+                //}
+                if (!string.IsNullOrEmpty(d["orgCodeUpper"].ToString()))
                 {
-                    dt = mm.GetOrgById(d["parentId"].ToString());
+                    d["orgpCode"] = d["orgCodeUpper"].ToString();
                 }
-                else {
-                    d["parentId"] = null;
-                }
-                if (dt != null)
+                else
                 {
-                    orgpcode = dt.Rows[0]["ORG_CODE"].ToString();
-                }
-                if (!string.IsNullOrEmpty(orgpcode))
-                {
-                    d["orgpCode"] = orgpcode;
-                }
-                else {
                     d["orgpCode"] = null;
                 }
+                DataTable orgdt = mm.GetOrgByCode(d["orgCodeUpper"].ToString());
+                int SwiftNumber = 0;
+                if (orgdt != null && orgdt.Rows.Count > 0)
+                {
+                    SwiftNumber = orgdt.Rows.Count + 1;
+                }
+                string orgCode = d["orgCodeUpper"].ToString() + SwiftNumber.ToString().PadLeft(3, '0');
+                d["orgCode"] = orgCode;
                 string b = mm.createOrgArticle(d);
                 if (b == "")
                 {

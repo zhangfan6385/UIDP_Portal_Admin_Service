@@ -94,8 +94,8 @@ namespace STORE.ODS
         /// <returns></returns>
         public string updateOrgArticle(string strid)
         {
-            string sql = "update ts_uidp_org set ISDELETE='0' where ORG_ID in(" + strid + ")";
-
+            //string sql = "update ts_uidp_org set ISDELETE='0' where ORG_ID in(" + strid + ")";
+            string sql = "update ts_uidp_org set ISDELETE='0' where ORG_CODE like '" + strid + "%'";
             return db.ExecutByStringResult(sql);
         }
 
@@ -199,6 +199,36 @@ where a.ISDELETE='1'";
         public string GetDBType()
         {
             return Enum.GetName(typeof(DB.DBTYPE), (int)db.db.dbType);
+        }
+        public DataTable GetOrgByCode(string orgCode)
+        {
+            string sql = "select * FROM ts_uidp_org where ORG_CODE_UPPER='" + orgCode + "' ;";
+            return db.GetDataTable(sql);
+        }
+
+        public string getValidateNum(string orgCode)
+        {
+            string num = "0";
+            string sql = "select count(*) from ts_uidp_org inner join ts_uidp_org_user on ts_uidp_org.ORG_ID = ts_uidp_org_user.ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'";
+            num = db.GetString(sql);
+            return num;
+        }
+        public DataTable ValidateNum(string orgCode)
+        {
+            //Dictionary<string, string> sqld = new Dictionary<string, string>();
+            //sqld.Add("orgUser", "select ts_uidp_org_user.* from ts_uidp_org inner join ts_uidp_org_user on ts_uidp_org.ORG_ID = ts_uidp_org_user.ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'");
+            //sqld.Add("orgnotice", "select ts_store_notice.*  from ts_uidp_org inner join ts_store_notice on ts_uidp_org.ORG_ID = ts_store_notice.NOTICE_ORGID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ");
+            //sqld.Add("orgservice", "select ts_store_service.*  from ts_uidp_org inner join ts_store_service on ts_uidp_org.ORG_ID = ts_store_service.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ");
+            //sqld.Add("orgcompont", "select ts_store_component.*  from ts_uidp_org inner join ts_store_component on ts_uidp_org.ORG_ID = ts_store_component.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ");
+            //sqld.Add("orgplat", "select ts_store_platform.*  from ts_uidp_org inner join ts_store_platform on ts_uidp_org.ORG_ID = ts_store_platform.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ");
+            ////sqld.Add("orgNUM", "select count(*) orgUserNum from ts_uidp_org inner join ts_uidp_org_user on ts_uidp_org.ORG_ID = ts_uidp_org_user.ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ;select count(*) orgNoticeNum from ts_uidp_org inner join ts_store_notice on ts_uidp_org.ORG_ID = ts_store_notice.NOTICE_ORGID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' ;select count(*) orgServiceNum from ts_uidp_org inner join ts_store_service on ts_uidp_org.ORG_ID = ts_store_service.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'; select count(*) orgCompontNum from ts_uidp_org inner join ts_store_component on ts_uidp_org.ORG_ID = ts_store_component.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'; select count(*) orgPlatNum from ts_uidp_org inner join ts_store_platform on ts_uidp_org.ORG_ID = ts_store_platform.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'; ");
+            //return db.GetDataSet(sqld);
+            string sql = @"select 'orgUser' type,count(1) num from ts_uidp_org inner join ts_uidp_org_user on ts_uidp_org.ORG_ID = ts_uidp_org_user.ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' " +
+                "union select 'orgNotice',count(1) from ts_uidp_org inner join ts_store_notice on ts_uidp_org.ORG_ID = ts_store_notice.NOTICE_ORGID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' " +
+                "union select 'orgService',count(1) from ts_uidp_org inner join ts_store_service on ts_uidp_org.ORG_ID = ts_store_service.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' " +
+                "union select 'orgComponent',count(1) from ts_uidp_org inner join ts_store_component on ts_uidp_org.ORG_ID = ts_store_component.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%' " +
+                "union select 'orgplat',count(1) from ts_uidp_org inner join ts_store_platform on ts_uidp_org.ORG_ID = ts_store_platform.MANAGE_ORG_ID and ts_uidp_org.ORG_CODE like '" + orgCode + "%'";
+            return db.GetDataTable(sql);
         }
     }
 }
