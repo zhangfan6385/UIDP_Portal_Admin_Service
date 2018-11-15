@@ -376,7 +376,7 @@ namespace STORE.BIZModule
                 return "空数据，导入失败！";
             }
             DataView dv = new DataView(dt);
-            if (dt.Rows.Count != dv.ToTable(true, "组织机构编码").Rows.Count)
+            if (dt.Rows.Count != dv.ToTable(true, "*组织机构编码").Rows.Count)
             {
                 return "组织机构编码存在重复数据，导入失败！";
             }
@@ -393,8 +393,8 @@ namespace STORE.BIZModule
                 for (int j = rowbegin; j < rowend; j++)
                 //foreach (DataRow row in dt.Rows)
                 {
-                    var orgname = getString(dt.Rows[j]["组织机构简称"]);
-                    var allorgname = getString(dt.Rows[j]["组织机构名称"]);
+                    var orgname = getString(dt.Rows[j]["*组织机构简称"]);
+                    var allorgname = getString(dt.Rows[j]["*组织机构名称"]);
                     var dtt = orgdt;
                     DataRow[] rows = orgdt.Select("ORG_CODE='" + getString(dt.Rows[j]["*组织机构编码"]) + "' and ORG_CODE_UPPER='" + getString(dt.Rows[j]["*上级组织机构编码"]) + "'");
                     //DataRow[] rows = orgdt.Select("ORG_CODE='" + getString(dt.Rows[j]["组织机构简称"]) + "' and ORG_NAME='" + getString(dt.Rows[j]["组织机构名称"]) + "'");
