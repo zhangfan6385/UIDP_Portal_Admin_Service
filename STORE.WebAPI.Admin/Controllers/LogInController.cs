@@ -205,7 +205,7 @@ namespace STORE.WebAPI.Controllers
         {
             Dictionary<string, object> d = value.ToObject<Dictionary<string, object>>();
             string userCode = d["userCode"] == null ? "" : d["userCode"].ToString();
-            string password = d["password"] == null ? "" : STORE.Security.SecurityHelper.StringToMD5Hash(d["password"].ToString());
+            string password = d["password"] == null ? "" : d["password"].ToString();
             string userId = "";
             string userName = "云主机推送服务";
             string accessToken = "";
