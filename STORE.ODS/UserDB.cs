@@ -88,6 +88,14 @@ namespace STORE.ODS
 
             return db.ExecutByStringResult(sql);
         }
+        public string updateUserIP(Dictionary<string, object> d)
+        {
+            if (!string.IsNullOrEmpty(d["IP"].ToString())&& !string.IsNullOrEmpty(d["USER_ID"].ToString())) { 
+            string sql = "update  ts_uidp_userinfo set USER_IP=" + d["IP"].ToString() + " where USER_ID='" + d["USER_ID"].ToString() + "' ;";
+            return db.ExecutByStringResult(sql);
+            }
+            return "";
+        }
         public string updatePasswordData(Dictionary<string, object> d)
         {
             string sql = "update  ts_uidp_userinfo set USER_PASS='" + d["newpassword"].ToString() + "' where USER_ID='" + d["userid"].ToString() + "' and USER_PASS='" +d["password"].ToString() + "' ;";

@@ -115,6 +115,13 @@ namespace STORE.WebAPI.Controllers
                     STORE.UTILITY.AccessTokenTool.DeleteToken(userId);
                     STORE.UTILITY.AccessTokenTool.InsertToken(userId, accessToken, DateTime.Now.AddHours(1));
                     DataTable dtUser = um.getLoginByID(userId);
+                    if (string.IsNullOrEmpty(dt.Rows[0]["USER_IP"].ToString()))
+                    {
+                        Dictionary<string, object> ud = value.ToObject<Dictionary<string, object>>();
+                        ud["IP"] = Extension.GetClientUserIp(Request.HttpContext);
+                        ud["USER_ID"] = dt.Rows[0]["USER_ID"].ToString();
+                        mm.updateUserIP(ud);
+                    }
                     int level = 1;
                     if (Extension.GetClientUserIp(Request.HttpContext).ToString() != dt.Rows[0]["USER_IP"].ToString())
                     {
