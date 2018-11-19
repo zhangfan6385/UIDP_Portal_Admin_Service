@@ -636,7 +636,7 @@ namespace STORE.BIZModule
                             sql += " USER_TYPE='";
                             sql += getString((dt.Rows[i]["*用户类型"] != null && dt.Rows[i]["*用户类型"].ToString() == "普通用户") ? 1 : 0) + "',";
                             sql += " USER_PASS='";
-                            sql += getString(dt.Rows[i]["用户密码"]) == "" ? Security.SecurityHelper.StringToMD5Hash("123456") : Security.SecurityHelper.StringToMD5Hash(getString(dt.Rows[i]["用户密码"])) + "',";
+                            sql += getString(dt.Rows[i]["用户密码"]) == "" ? Security.SecurityHelper.StringToMD5Hash("123456") + "'," : Security.SecurityHelper.StringToMD5Hash(getString(dt.Rows[i]["用户密码"])) + "',";
                             sql += " USER_NAME='" + getString(dt.Rows[i]["*员工姓名"]) + "',";
                             sql += " USER_CODE='" + getString(dt.Rows[i]["员工编号"]) + "',";
                             sql += " USER_SEX='";
@@ -934,7 +934,8 @@ namespace STORE.BIZModule
             StringBuilder sb = new StringBuilder();
             for (int i = SourceDt.Rows.Count - 2; i > 0; i--)
             {
-                DataRow[] rows = SourceDt.Select(string.Format("{0}='{1}'", filedName, SourceDt.Rows[i][filedName]));
+                string aaa = string.Format("{0}='{1}'", filedName, SourceDt.Rows[i][filedName]);
+                DataRow[] rows = SourceDt.Select(string.Format("'{0}'='{1}'", filedName, SourceDt.Rows[i][filedName]));
                 if (rows.Length > 1)
                 {
                     //SourceDt.Rows.RemoveAt(i);
