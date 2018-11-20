@@ -25,7 +25,7 @@ namespace STORE.ODS
                 }
                 if (d["SERVER_PORT"] != null && d["SERVER_PORT"].ToString() != "")
                 {
-                    sql += " and a.SERVER_PORT=" + d["SERVER_PORT"].ToString();
+                    sql += " and a.SERVER_PORT='" + d["SERVER_PORT"].ToString()+"'";
                 }
                 if (d["SERVER_URL"] != null && d["SERVER_URL"].ToString() != "")
                 {
