@@ -501,7 +501,7 @@ namespace STORE.BIZModule
             //tool.GetDataTable(System.IO.File.OpenRead(path), path, modePath, ref mes, ref dt);
 
             List<string> list = new List<string>();
-            string modePath = System.IO.Directory.GetCurrentDirectory() + "\\ExcelModel\\用户.xlsx";//原始文件
+            string modePath = System.IO.Directory.GetCurrentDirectory() + "\\ExcelModel\\用户.xls";//原始文件
             string path = filePath;//原始文件
             string mes = "";
             DataTable dt = new DataTable();
