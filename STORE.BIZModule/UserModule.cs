@@ -237,10 +237,10 @@ namespace STORE.BIZModule
                 {
                     model.USER_NAME = row["USER_NAME"].ToString();
                 }
-                if (row["USER_ALIAS"] != null)
-                {
-                    model.USER_ALIAS = row["USER_ALIAS"].ToString();
-                }
+                //if (row["USER_ALIAS"] != null)
+                //{
+                //    model.USER_ALIAS = row["USER_ALIAS"].ToString();
+                //}
                 if (row["USER_PASS"] != null)
                 {
                     model.USER_PASS = row["USER_PASS"].ToString();
@@ -253,18 +253,18 @@ namespace STORE.BIZModule
                 {
                     model.PHONE_OFFICE = row["PHONE_OFFICE"].ToString();
                 }
-                if (row["PHONE_ORG"] != null)
-                {
-                    model.PHONE_ORG = row["PHONE_ORG"].ToString();
-                }
+                //if (row["PHONE_ORG"] != null)
+                //{
+                //    model.PHONE_ORG = row["PHONE_ORG"].ToString();
+                //}
                 if (row["USER_EMAIL"] != null)
                 {
                     model.USER_EMAIL = row["USER_EMAIL"].ToString();
                 }
-                if (row["EMAIL_OFFICE"] != null)
-                {
-                    model.EMAIL_OFFICE = row["EMAIL_OFFICE"].ToString();
-                }
+                //if (row["EMAIL_OFFICE"] != null)
+                //{
+                //    model.EMAIL_OFFICE = row["EMAIL_OFFICE"].ToString();
+                //}
                 if (row["USER_IP"] != null)
                 {
                     model.USER_IP = row["USER_IP"].ToString();
@@ -416,7 +416,7 @@ namespace STORE.BIZModule
                 DataTable dt = db.fetchUserRoleList(d);
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    DataTable dtName = dt.DefaultView.ToTable(true, "USER_ID", "REG_TIME", "USER_NAME", "USER_CODE", "USER_ALIAS", "USER_PASS", "PHONE_MOBILE", "PHONE_OFFICE", "PHONE_ORG", "USER_EMAIL", "EMAIL_OFFICE", "USER_IP", "FLAG", "USER_DOMAIN", "REMARK");
+                    DataTable dtName = dt.DefaultView.ToTable(true, "USER_ID", "REG_TIME", "USER_NAME", "USER_CODE", "USER_PASS", "PHONE_MOBILE", "PHONE_OFFICE", "USER_EMAIL",  "USER_IP", "FLAG", "USER_DOMAIN", "REMARK");
                     dtName.Columns.Add("roleId");
                     dtName.Columns.Add("groupName");
                     foreach (DataRow row in dtName.Rows)

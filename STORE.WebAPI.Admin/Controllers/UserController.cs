@@ -267,7 +267,7 @@ namespace STORE.WebAPI.Controllers
                     string _deptCode = dt.Rows[0]["ORG_CODE"] == null ? "" : dt.Rows[0]["ORG_CODE"].ToString();
                     string _deptName = dt.Rows[0]["ORG_SHORT_NAME"] == null ? "" : dt.Rows[0]["ORG_SHORT_NAME"].ToString();
                     string _deptId = dt.Rows[0]["ORG_ID"] == null ? "" : dt.Rows[0]["ORG_ID"].ToString();
-                    string _userType = dt.Rows[0]["AUTHENTICATION_TYPE"] == null ? "" : dt.Rows[0]["AUTHENTICATION_TYPE"].ToString();
+                    string _userType = dt.Rows[0]["USER_TYPE"] == null ? "" : dt.Rows[0]["USER_TYPE"].ToString();
                     STORE.LOG.SysLog log = new LOG.SysLog();
                     //log.Info(DateTime.Now, d["userId"].ToString(), _name, ClientIp, 0, "info", "",1);
                     log.Info(DateTime.Now, userID, _name, ClientIp, 0, "info", "", 1);
