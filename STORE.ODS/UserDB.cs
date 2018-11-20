@@ -91,7 +91,7 @@ namespace STORE.ODS
         public string updateUserIP(Dictionary<string, object> d)
         {
             if (!string.IsNullOrEmpty(d["IP"].ToString())&& !string.IsNullOrEmpty(d["USER_ID"].ToString())) { 
-            string sql = "update  ts_uidp_userinfo set USER_IP=" + d["IP"].ToString() + " where USER_ID='" + d["USER_ID"].ToString() + "' ;";
+            string sql = "update  ts_uidp_userinfo set USER_IP='" + d["IP"].ToString() + "' where USER_ID='" + d["USER_ID"].ToString() + "' ;";
             return db.ExecutByStringResult(sql);
             }
             return "";

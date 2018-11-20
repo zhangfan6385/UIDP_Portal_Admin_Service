@@ -117,7 +117,7 @@ namespace STORE.WebAPI.Controllers
                     DataTable dtUser = um.getLoginByID(userId);
                     if (string.IsNullOrEmpty(dt.Rows[0]["USER_IP"].ToString()))
                     {
-                        Dictionary<string, object> ud = value.ToObject<Dictionary<string, object>>();
+                        Dictionary<string, object> ud = new Dictionary<string, object>();
                         ud["IP"] = Extension.GetClientUserIp(Request.HttpContext);
                         ud["USER_ID"] = dt.Rows[0]["USER_ID"].ToString();
                         mm.updateUserIP(ud);
